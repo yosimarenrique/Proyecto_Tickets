@@ -1,15 +1,45 @@
 apply plugin: 'ear'
 apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
+//apply plugin: 'com.bmuschko.nexus' 
+
+group = 'com.tickets'
+version = '1.0'
+
 
 compileJava {options.encoding = "UTF-8"}
+
+repositories {
+    maven {
+         url "http://localhost:8090/repository/maven-central/"
+    }
+    
+   
+}
 
 
 repositories {  
     mavenCentral()
+  
 }
+
+repositories {
+      maven { url 'http://localhost:8081/artifactory/repo' }
+    }
+    
+task sourceJar(type: Jar) {
+  classifier "sources"
+}
+
+
+
 
 dependencies {
 	compile project(path: ':Tickets', configuration: 'archives')
+	
+	
 	//compile project(path: ':Tickets-ejb', configuration: 'archives')
 	//compile project(path: ':AtddTickets', configuration: 'archives')
     deploy project(path: ':Tickets', configuration: 'archives')
@@ -17,11 +47,48 @@ dependencies {
   //	deploy project(path: ':AtddTickets', configuration: 'archives')
     earlib group: 'log4j', name: 'log4j', version: '1.2.15', ext: 'jar'
     
+   // classpath 'com.bmuschko:gradle-nexus-plugin:2.3'
+
 }
 
+uploadArchives {
+    repositories {
+       mavenDeployer {
+             repository(url: "http://localhost:8090/repository/Prueba/") {
+             authentication(userName: "admin", password: "admin123")
+			}
+             pom.version = "1.0-SNAPSHOT"
+             pom.artifactId = "simple-project"
+         	 pom.groupId = "com.example"
+         	// uploadSources = true
+       }
+    }
+}
 
 
 ear{
 	archiveName = "${baseName}.${extension}"
 }
 
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+           
+           artifact sourceJar // Publish the output of the sourceJar task
+     		// artifact 'my-file-name.jar' // Publish a file created outside of the build
+      		artifact source: sourceJar, classifier: 'src', extension: 'zip'
+  				
+           
+        }
+    }
+    repositories {
+        maven {
+            credentials {
+              username 'yosimar.valega'
+              password 'lazaro86'
+            }
+             url "http://localhost:8081/artifactory/proyectos"
+        }
+    }
+}
