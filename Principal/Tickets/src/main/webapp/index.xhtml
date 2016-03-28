@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+       xmlns:p="http://primefaces.org/ui">  
+
+<h:head>
+<title>Ingreso de Solicitudes TI</title>
+	<meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+</h:head> 
+<body>
+<p:growl id="mensaje" autoUpdate="true" showDetail="true"  showSummary="false" life="3000" /> 
+<h:form id="envio">
+
+    <p:panel header="Ingreso de la Solicitud">
+ 	
+        <h:panelGrid id="grid" columns="3" cellpadding="8">
+            <h:outputLabel for="nombre" value="Nombre Completo:" style="font-weight:bold"/>                    
+            <p:inputText id="nombre" placeholder="Escriba aqui su nombre" maxlength="100" value="#{envioSolicitud.solicitud.nombre}" required="true" requiredMessage="El nombre es requerido" label="nombre"/>
+            <h:outputText value="" />
+            
+            <h:outputLabel for="ubicacion" value="Ubicacion" style="font-weight:bold"/>                    
+            <p:inputText id="ubicacion" value="#{envioSolicitud.solicitud.ubicacion}" required="true" requiredMessage="La ubicacion es requerida" label="ubicacion" />
+            <h:outputText value="" />
+            
+           
+            
+            <h:outputLabel for="telefono" value="Telefono" style="font-weight:bold"/>                    
+            <p:inputText id="telefono" value="#{envioSolicitud.solicitud.telefono}"  required="true" requiredMessage="El telefono es requerido" label="telefono" >
+            </p:inputText>
+            <h:outputText value="" />          
+ 
+            <h:outputLabel for="descripcion" value="Descripcion de la solicitud" style="font-weight:bold"/>
+            <p:inputTextarea id="descripcion" rows="5" cols="33"  counter="descripcion2" maxlength="280" counterTemplate="{0} caracteres restantes." value="#{envioSolicitud.solicitud.descripcion}" required="true" requiredMessage="La descripcion es requerida" label="descripcion" autoResize="false" >
+            </p:inputTextarea>
+            <h:outputText value="" />
+            <p:outputLabel value=""/><h:outputText id="descripcion2" />
+            
+        </h:panelGrid>
+        
+        
+        <p:commandButton id="btnenviar" value="Enviar Solicitud"  icon="ui-icon-check" validateClient="true" action="#{envioSolicitud.enviarsolicitud}" styleClass="btn btn-primary" />
+        
+    </p:panel>
+</h:form>
+</body> 
+</html>

@@ -1,0 +1,53 @@
+apply plugin: 'war'
+apply plugin: 'eclipse-wtp'
+apply plugin: "jacoco"
+
+sourceCompatibility = 1.7
+version = '1.0'
+
+repositories {
+mavenLocal()
+   mavenCentral()
+   maven{
+   url "http://repository.primefaces.org/"
+   }
+  
+}
+
+jacoco {
+    toolVersion = "0.7.1.201405082137"
+    reportsDir = file("$buildDir/customJacocoReportDir")
+}
+
+dependencies {
+   	compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
+   	compile "org.primefaces:primefaces:5.3"
+	compile "javax.faces:javax.faces-api:2.0"
+	/*compile 'org.primefaces.themes:all-themes:1.0.10'*/
+	compile "javax.ws.rs:jsr311-api:1.1.1"
+	compile 'org.jboss.spec:jboss-javaee-7.0:1.0.3.Final'
+	compile 'junit:junit:4.10'
+	
+	///Hibernate
+	
+	compile 'org.hibernate:hibernate-core:4.3.6.Final'
+   	compile 'javax.servlet:javax.servlet-api:3.1.0'
+   	compile 'org.slf4j:slf4j-simple:1.7.7'
+  	compile 'org.javassist:javassist:3.15.0-GA'
+   	compile 'mysql:mysql-connector-java:5.1.13'
+   	compile 'commons-dbcp:commons-dbcp:1.4' 
+	
+	testCompile group: 'junit', name: 'junit', version: '4.+'
+}
+
+war {
+	archiveName = "${baseName}.${extension}"
+}
+
+test {
+    jacoco {
+        append = false
+        destinationFile = file("$buildDir/jacoco/jacocoTest.exec")
+        classDumpFile = file("$buildDir/jacoco/classpathdumps")
+    }
+}

@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head></h:head> 
+<body> 
+<h:form >
+<h1>Iniciar Sesion</h1>
+<h:panelGrid id="grid" columns="3" cellpadding="8">
+	<h:messages />
+	<h:outputLabel value="E-mail" />
+	<h:inputText id="email" placeholder="Escriba aqui su correo" maxlength="100" value="#{adminBean.empleado.email}" required="true" requiredMessage="El correo es requerido" label="Correo Electronico"/>
+	<h:outputLabel value="Clave" />
+	<h:inputSecret id="clave" value="#{adminBean.empleado.clave}" required="true" requiredMessage="La clave es requerido" label="Clave" />
+	
+	<h:commandButton value="Ingresar" action="#{adminBean.verificarDatos}" />
+</h:panelGrid>
+
+</h:form>
+</body> 
+</html>
